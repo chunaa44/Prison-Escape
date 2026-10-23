@@ -49,7 +49,7 @@ shape = SubResource("RectangleShape2D_fmmi7")
 position = Vector2(640, 360)
 
 [node name="SecurityCamera" parent="." unique_id=1346738194 instance=ExtResource("5_tbgi4")]
-position = Vector2(300, 500)
+position = Vector2(300, 450)
 
 [node name="GameUI" type="CanvasLayer" parent="." unique_id=262725603]
 

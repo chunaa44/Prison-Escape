@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://tu8qmkqfku4p" path="res://scripts/patrol_drone.gd" id="1_w2x3b"]
 [ext_resource type="Texture2D" uid="uid://c7brmhogtive5" path="res://assets/drone/drone idle_Sheet.png" id="2_domdq"]
 [ext_resource type="Texture2D" uid="uid://b3sk141krl52b" path="res://assets/drone/drone run-Sheet.png" id="3_5h0os"]
+[ext_resource type="Script" uid="uid://b6hpnikbcsklk" path="res://scripts/vision_cone.gd" id="4_domdq"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_gu086"]
 atlas = ExtResource("2_domdq")
@@ -147,17 +148,19 @@ animations = [{
 size = Vector2(24, 24)
 
 [node name="PatrolDrone" type="CharacterBody2D" unique_id=606412144]
-scale = Vector2(2, 2)
 script = ExtResource("1_w2x3b")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=2073086899]
+scale = Vector2(2, 2)
 sprite_frames = SubResource("SpriteFrames_m3mo6")
 animation = &"drone_run"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1369938856]
+scale = Vector2(2, 2)
 shape = SubResource("RectangleShape2D_m3mo6")
 
 [node name="VisionCone" type="Node2D" parent="." unique_id=1027398213]
-
-[node name="RayCast2D" type="RayCast2D" parent="VisionCone" unique_id=1408504983]
-target_position = Vector2(0, 200)
+rotation = 1.5707964
+script = ExtResource("4_domdq")
+view_range = 350.0
+view_angle = 40.0

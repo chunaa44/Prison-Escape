@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://dgjnc7pyfjcjx" path="res://scripts/security_camera.gd" id="1_7mono"]
 [ext_resource type="Texture2D" uid="uid://c7brmhogtive5" path="res://assets/drone/drone idle_Sheet.png" id="2_nogw0"]
+[ext_resource type="Script" uid="uid://b6hpnikbcsklk" path="res://scripts/vision_cone.gd" id="2_w5a04"]
 [ext_resource type="Texture2D" uid="uid://b3sk141krl52b" path="res://assets/drone/drone run-Sheet.png" id="3_w5a04"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_bluxi"]
@@ -147,11 +148,10 @@ animations = [{
 script = ExtResource("1_7mono")
 
 [node name="VisionCone" type="Node2D" parent="." unique_id=1297086803]
-
-[node name="RayCast2D" type="RayCast2D" parent="VisionCone" unique_id=1696008712]
-collision_mask = 3
+script = ExtResource("2_w5a04")
+view_range = 350.0
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=325561225]
 scale = Vector2(2, 2)
 sprite_frames = SubResource("SpriteFrames_m3mo6")
-animation = &"drone_run"
+animation = &"drone_idle"
