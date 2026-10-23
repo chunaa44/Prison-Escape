@@ -1,0 +1,13 @@
+[gd_scene format=3 uid="uid://yby4dhpjqgy2"]
+
+[ext_resource type="Script" uid="uid://dvlbcsrccj4gs" path="res://scripts/teleport_projectile.gd" id="1_3aly7"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_m3mo6"]
+radius = 8.0
+
+[node name="TeleportProjectile" type="Area2D" unique_id=1835651877]
+collision_layer = 4
+script = ExtResource("1_3aly7")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1444297094]
+shape = SubResource("CircleShape2D_m3mo6")

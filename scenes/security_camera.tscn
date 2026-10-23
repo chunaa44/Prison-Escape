@@ -1,0 +1,157 @@
+[gd_scene format=3 uid="uid://dejbiq7mh7ihi"]
+
+[ext_resource type="Script" uid="uid://dgjnc7pyfjcjx" path="res://security_camera.gd" id="1_7mono"]
+[ext_resource type="Texture2D" uid="uid://c7brmhogtive5" path="res://assets/drone/drone idle_Sheet.png" id="2_nogw0"]
+[ext_resource type="Texture2D" uid="uid://b3sk141krl52b" path="res://assets/drone/drone run-Sheet.png" id="3_w5a04"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bluxi"]
+atlas = ExtResource("2_nogw0")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_m2f63"]
+atlas = ExtResource("2_nogw0")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_doiwn"]
+atlas = ExtResource("2_nogw0")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4tk5u"]
+atlas = ExtResource("2_nogw0")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qdjno"]
+atlas = ExtResource("2_nogw0")
+region = Rect2(128, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ln4qr"]
+atlas = ExtResource("2_nogw0")
+region = Rect2(160, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_o2d25"]
+atlas = ExtResource("2_nogw0")
+region = Rect2(192, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fd5lr"]
+atlas = ExtResource("2_nogw0")
+region = Rect2(224, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j8oaf"]
+atlas = ExtResource("3_w5a04")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2o7ga"]
+atlas = ExtResource("3_w5a04")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_he3oy"]
+atlas = ExtResource("3_w5a04")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w2tq0"]
+atlas = ExtResource("3_w5a04")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vccae"]
+atlas = ExtResource("3_w5a04")
+region = Rect2(128, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rl5iv"]
+atlas = ExtResource("3_w5a04")
+region = Rect2(160, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wrkww"]
+atlas = ExtResource("3_w5a04")
+region = Rect2(192, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1dbqw"]
+atlas = ExtResource("3_w5a04")
+region = Rect2(224, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jqogs"]
+atlas = ExtResource("3_w5a04")
+region = Rect2(256, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_p33wm"]
+atlas = ExtResource("3_w5a04")
+region = Rect2(288, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_m3mo6"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bluxi")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_m2f63")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_doiwn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4tk5u")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qdjno")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ln4qr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_o2d25")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fd5lr")
+}],
+"loop": 1,
+"name": &"drone_idle",
+"speed": 6.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_j8oaf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2o7ga")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_he3oy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_w2tq0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vccae")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rl5iv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wrkww")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1dbqw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jqogs")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_p33wm")
+}],
+"loop": 1,
+"name": &"drone_run",
+"speed": 10.0
+}]
+
+[node name="SecurityCamera" type="Node2D" unique_id=1346738194]
+script = ExtResource("1_7mono")
+
+[node name="VisionCone" type="Node2D" parent="." unique_id=1297086803]
+
+[node name="RayCast2D" type="RayCast2D" parent="VisionCone" unique_id=1696008712]
+collision_mask = 3
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=325561225]
+scale = Vector2(2, 2)
+sprite_frames = SubResource("SpriteFrames_m3mo6")
+animation = &"drone_run"
