@@ -15,6 +15,8 @@ func _ready() -> void:
 	start_x = global_position.x
 	$AnimatedSprite2D.play("drone_run")
 	ray.enabled = true
+	ray.collision_mask = 3          # see ground (layer 1) AND player (layer 2)
+	ray.add_exception(self)         # don't let the ray hit the drone itself
 	queue_redraw()
 
 
@@ -54,7 +56,9 @@ func check_for_player() -> void:
 		return
 
 	var player = players[0]
-	var to_player: Vector2 = player.global_position - global_position
+
+	# Local coordinates, so the drone's 2x scale matches the drawn cone.
+	var to_player: Vector2 = to_local(player.global_position)
 
 	if to_player.y < 0 or to_player.y > view_range:
 		return

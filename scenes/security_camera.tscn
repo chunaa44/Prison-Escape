@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://dejbiq7mh7ihi"]
 
-[ext_resource type="Script" uid="uid://dgjnc7pyfjcjx" path="res://security_camera.gd" id="1_7mono"]
+[ext_resource type="Script" uid="uid://dgjnc7pyfjcjx" path="res://scripts/security_camera.gd" id="1_7mono"]
 [ext_resource type="Texture2D" uid="uid://c7brmhogtive5" path="res://assets/drone/drone idle_Sheet.png" id="2_nogw0"]
 [ext_resource type="Texture2D" uid="uid://b3sk141krl52b" path="res://assets/drone/drone run-Sheet.png" id="3_w5a04"]
 
