@@ -19,8 +19,6 @@ func _ready() -> void:
 	$AnimatedSprite2D.play("idle")
 	queue_redraw()
 
-
-
 func _physics_process(delta: float) -> void:
 	if is_dead:
 		return
