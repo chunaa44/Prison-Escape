@@ -7,7 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://ciwlwk15umbma" path="res://assets/player/cyber prisoner run cycle-Sheet.png" id="3_qhqgy"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_14egd"]
-size = Vector2(20, 36)
+size = Vector2(16, 28)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_wqfne"]
 atlas = ExtResource("2_qlg0r")
@@ -264,13 +264,13 @@ animations = [{
 }]
 
 [node name="Player" type="CharacterBody2D" unique_id=1493234333 groups=["player"]]
+scale = Vector2(0.75, 0.75)
 script = ExtResource("1_4flbx")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=474259547]
-scale = Vector2(2, 2)
+position = Vector2(-2.3841858e-07, 2)
 shape = SubResource("RectangleShape2D_14egd")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=2146089034]
-scale = Vector2(2, 2)
 sprite_frames = SubResource("SpriteFrames_c8j4n")
 animation = &"death"

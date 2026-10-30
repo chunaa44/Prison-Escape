@@ -1,16 +1,16 @@
 extends CharacterBody2D
 
 const PROJECTILE_SCENE = preload(
-    "res://scenes/teleport_projectile.tscn"
+	"res://scenes/teleport_projectile.tscn"
 )
 
-@export var move_speed: float = 250.0
-@export var jump_velocity: float = -550.0
-@export var gravity: float = 1000.0
+@export var move_speed: float = 120.0
+@export var jump_velocity: float = -300.0
+@export var gravity: float = 1200.0
 
-@onready var death_screen = get_tree().current_scene.get_node("GameUI/DeathScreen")
+@onready var death_screen = get_tree().current_scene.get_node_or_null("GameUI/DeathScreen")
 
-var body_size: Vector2 = Vector2(24, 36)
+var body_size: Vector2 = Vector2(16, 28)
 var active_projectile: Area2D
 var is_dead: bool = false
 
@@ -19,10 +19,11 @@ func _ready() -> void:
 	$AnimatedSprite2D.play("idle")
 	queue_redraw()
 
+
 func _physics_process(delta: float) -> void:
 	if is_dead:
 		return
-	
+
 	var direction := Input.get_axis("move_left", "move_right")
 	velocity.x = direction * move_speed
 
@@ -68,7 +69,7 @@ func throw_projectile() -> void:
 	get_tree().current_scene.add_child(active_projectile)
 
 	active_projectile.global_position = (
-		global_position + aim_direction * 24.0
+		global_position + aim_direction * 14.0
 	)
 
 	active_projectile.launch(aim_direction)
@@ -95,17 +96,18 @@ func teleport_to_marker() -> void:
 
 func get_teleport_destination(projectile: Area2D) -> Variant:
 	var normal: Vector2 = projectile.get("hit_normal")
-	var hit_body = projectile.get("hit_body") as StaticBody2D
+	var hit_body = projectile.get("hit_body") as Node2D
 
 	if hit_body == null:
 		return null
 
+	# Tilemaps have no CollisionShape2D child, so shape_node is null for them.
 	var shape_node := hit_body.get_node_or_null(
-        "CollisionShape2D"
+		"CollisionShape2D"
 	) as CollisionShape2D
 
 	var is_platform := hit_body.is_in_group(
-        "climbable_platforms"
+		"climbable_platforms"
 	)
 
 	# Find the platform's top surface when needed.
@@ -155,13 +157,17 @@ func get_teleport_destination(projectile: Area2D) -> Variant:
 			# Hit a platform's side: climb onto its top.
 			destination = top_position
 		else:
-			# Hit a wall: appear beside it and fall.
-			destination = projectile.global_position + Vector2(
-				normal.x * (body_size.x / 2.0 + 2.0),
-				0.0
-			)
+			# Hit a wall: try to climb onto its top, otherwise appear beside it.
+			var climb = find_climb_position(projectile.global_position, normal)
 
-	
+			if climb != null:
+				destination = climb
+			else:
+				destination = projectile.global_position + Vector2(
+					normal.x * (body_size.x / 2.0 + 2.0),
+					0.0
+				)
+
 	elif normal.y > 0.7:
 		# Hit the underside or ceiling: appear below it and fall.
 		destination = projectile.global_position + Vector2(
@@ -177,6 +183,22 @@ func get_teleport_destination(projectile: Area2D) -> Variant:
 	return destination
 
 
+func find_climb_position(hit_position: Vector2, normal: Vector2) -> Variant:
+	# Start inside the wall, then move up until there is free space.
+	var start := hit_position - Vector2(
+		normal.x * (body_size.x / 2.0 + 2.0),
+		0.0
+	)
+
+	for i in range(20):
+		var test_position := start + Vector2(0.0, -4.0 * i)
+
+		if not destination_is_blocked(test_position):
+			return test_position
+
+	return null
+
+
 func destination_is_blocked(destination: Vector2) -> bool:
 	var rectangle := RectangleShape2D.new()
 	rectangle.size = body_size
@@ -190,6 +212,7 @@ func destination_is_blocked(destination: Vector2) -> bool:
 	return not get_world_2d().direct_space_state \
 		.intersect_shape(query, 1).is_empty()
 
+
 func die() -> void:
 	if is_dead:
 		return
@@ -201,5 +224,7 @@ func die() -> void:
 		active_projectile.queue_free()
 		active_projectile = null
 
-	$AnimatedSprite2D.play("death")
-	death_screen.show()
+	$AnimatedSprite2D.play("die")
+
+	if death_screen != null:
+		death_screen.show()

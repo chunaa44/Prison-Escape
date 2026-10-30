@@ -5,7 +5,7 @@ extends Area2D
 var direction: Vector2 = Vector2.RIGHT
 var is_stuck: bool = false
 var hit_normal: Vector2 = Vector2.ZERO
-var hit_body: StaticBody2D
+var hit_body: Node2D
 
 
 func launch(throw_direction: Vector2) -> void:
@@ -27,7 +27,7 @@ func _physics_process(delta: float) -> void:
 	var result := get_world_2d().direct_space_state.intersect_ray(query)
 
 	if not result.is_empty():
-		var body := result["collider"] as StaticBody2D
+		var body := result["collider"] as Node2D
 
 		if body != null:
 			global_position = result["position"]
@@ -42,5 +42,5 @@ func _physics_process(delta: float) -> void:
 
 
 func _draw() -> void:
-	draw_circle(Vector2.ZERO, 8.0, Color(0.2, 1.0, 0.8))
-	draw_circle(Vector2.ZERO, 3.0, Color.WHITE)
+	draw_circle(Vector2.ZERO, 4.0, Color(0.2, 1.0, 0.8))
+	draw_circle(Vector2.ZERO, 1.5, Color.WHITE)
