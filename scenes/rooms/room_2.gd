@@ -1,7 +1,8 @@
 extends Node2D
 
+@export var next_room: PackedScene   # leave empty on the last room
 @export var left_limit: float = 18.0
-@export var exit_x: float = 380.0   # walk past this to finish
+@export var exit_x: float = 380.0
 
 @onready var player: CharacterBody2D = $Player
 @onready var death_screen: Control = $GameUI/DeathScreen
@@ -30,9 +31,12 @@ func _physics_process(_delta: float) -> void:
 
 	if player.global_position.x >= exit_x:
 		finished = true
-		player.is_dead = true
-		player.velocity = Vector2.ZERO
-		win_screen.show()
+		if next_room != null:
+			get_tree().change_scene_to_packed(next_room)
+		else:
+			player.is_dead = true
+			player.velocity = Vector2.ZERO
+			win_screen.show()
 
 
 func _on_restart_button_pressed() -> void:

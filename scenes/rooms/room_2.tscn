@@ -4,6 +4,7 @@
 [ext_resource type="Script" uid="uid://hlacacpowocl" path="res://scenes/rooms/room_2.gd" id="1_ar6ir"]
 [ext_resource type="PackedScene" uid="uid://2w4f6oq6hnjf" path="res://scenes/patrol_drone.tscn" id="2_0g03g"]
 [ext_resource type="Texture2D" uid="uid://wd88th88y6x5" path="res://assets/tilesets/level_tileset.png" id="2_ar6ir"]
+[ext_resource type="PackedScene" uid="uid://rlrwhnkt0emq" path="res://scenes/rooms/room_3.tscn" id="2_km8ef"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_hnbyo"]
 texture = ExtResource("2_ar6ir")
@@ -701,6 +702,7 @@ sources/0 = SubResource("TileSetAtlasSource_scgta")
 
 [node name="Room2" type="Node2D" unique_id=387413928]
 script = ExtResource("1_ar6ir")
+next_room = ExtResource("2_km8ef")
 
 [node name="PatrolDrone" parent="." unique_id=606412144 instance=ExtResource("2_0g03g")]
 position = Vector2(200, -95)
