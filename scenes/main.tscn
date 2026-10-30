@@ -1,28 +1,120 @@
-[gd_scene format=3 uid="uid://ct8sy5mqdflju"]
+[gd_scene format=3 uid="uid://whmqr7p0b6n7"]
 
 [ext_resource type="PackedScene" uid="uid://ddqbiq2orptsa" path="res://scenes/player.tscn" id="1_jyhfs"]
-[ext_resource type="Script" uid="uid://cu8vq5wm4e1os" path="res://scenes/main.gd" id="1_tefeu"]
-[ext_resource type="Script" uid="uid://blgmb56i0i2jc" path="res://scripts/ground.gd" id="2_jyhfs"]
-[ext_resource type="Script" uid="uid://dgfn13s3utvct" path="res://scripts/platform_1.gd" id="3_jyhfs"]
-[ext_resource type="Script" uid="uid://b8j8kgltpyl0q" path="res://scripts/platform_2.gd" id="4_jyhfs"]
 [ext_resource type="PackedScene" uid="uid://dejbiq7mh7ihi" path="res://scenes/security_camera.tscn" id="5_tbgi4"]
 [ext_resource type="PackedScene" uid="uid://2w4f6oq6hnjf" path="res://scenes/patrol_drone.tscn" id="7_o6xl0"]
-[ext_resource type="Script" uid="uid://dfg2e5yoir8yr" path="res://scripts/exit_door.gd" id="8_tipki"]
+
+[sub_resource type="GDScript" id="GDScript_sugp2"]
+script/source = "extends Node2D
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	pass # Replace with function body.
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta: float) -> void:
+	pass
+
+func _on_restart_button_pressed() -> void:
+	get_tree().reload_current_scene()
+"
+
+[sub_resource type="GDScript" id="GDScript_jyhfs"]
+script/source = "extends StaticBody2D
+
+@export var platform_size: Vector2 = Vector2(1280, 80)
+@export var platform_color: Color = Color(0.466, 0.908, 0.22, 1.0)
+
+
+func _draw() -> void:
+	draw_rect(
+		Rect2(-platform_size / 2.0, platform_size),
+		platform_color
+	)
+"
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_14egd"]
 size = Vector2(1280, 80)
 
+[sub_resource type="GDScript" id="GDScript_tbgi4"]
+script/source = "
+extends StaticBody2D
+
+@export var platform_size: Vector2 = Vector2(240, 24)
+@export var platform_color: Color = Color(0.251, 0.302, 1.0, 1.0)
+
+
+func _draw() -> void:
+	draw_rect(
+		Rect2(-platform_size / 2.0, platform_size),
+		platform_color
+	)
+"
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_c8j4n"]
 size = Vector2(240, 24)
 
+[sub_resource type="GDScript" id="GDScript_tefeu"]
+script/source = "
+extends StaticBody2D
+
+@export var platform_size: Vector2 = Vector2(220, 24)
+@export var platform_color: Color = Color(0.251, 0.302, 1.0, 1.0)
+
+
+func _draw() -> void:
+	draw_rect(
+		Rect2(-platform_size / 2.0, platform_size),
+		platform_color
+	)
+"
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fmmi7"]
 size = Vector2(220, 24)
+
+[sub_resource type="GDScript" id="GDScript_o6xl0"]
+script/source = "extends Area2D
+
+@export var door_color: Color = Color(0.2, 1.0, 0.4, 1.0)
+
+@onready var win_screen = get_tree().current_scene.get_node(\"GameUI/WinScreen\")
+@onready var shape_node: CollisionShape2D = $CollisionShape2D
+
+
+func _ready() -> void:
+	z_index = 5   # draw on top of ground and platforms
+	body_entered.connect(_on_body_entered)
+	queue_redraw()
+
+
+func _draw() -> void:
+	# Draw exactly where the collision shape is, so they always match.
+	var size: Vector2 = shape_node.shape.size
+	draw_rect(
+		Rect2(shape_node.position - size / 2.0, size),
+		door_color
+	)
+
+
+func _on_body_entered(body: Node2D) -> void:
+	if not body.is_in_group(\"player\"):
+		return
+
+	# Reuse the player's is_dead flag so the player freezes
+	# and drones can no longer kill them after they escape.
+	body.is_dead = true
+	body.velocity = Vector2.ZERO
+
+	win_screen.show()
+"
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_m3mo6"]
 size = Vector2(40, 64)
 
 [node name="Main" type="Node2D" unique_id=892680559]
-script = ExtResource("1_tefeu")
+script = SubResource("GDScript_sugp2")
 
 [node name="Player" parent="." unique_id=1493234333 instance=ExtResource("1_jyhfs")]
 position = Vector2(150, 400)
@@ -30,21 +122,21 @@ collision_layer = 2
 
 [node name="Ground" type="StaticBody2D" parent="." unique_id=635658845]
 position = Vector2(640, 650)
-script = ExtResource("2_jyhfs")
+script = SubResource("GDScript_jyhfs")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Ground" unique_id=1890259745]
 shape = SubResource("RectangleShape2D_14egd")
 
 [node name="Platform1" type="StaticBody2D" parent="." unique_id=706637360 groups=["climbable_platforms"]]
 position = Vector2(400, 520)
-script = ExtResource("3_jyhfs")
+script = SubResource("GDScript_tbgi4")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Platform1" unique_id=1731900771]
 shape = SubResource("RectangleShape2D_c8j4n")
 
 [node name="Platform2" type="StaticBody2D" parent="." unique_id=1765224312 groups=["climbable_platforms"]]
 position = Vector2(760, 420)
-script = ExtResource("4_jyhfs")
+script = SubResource("GDScript_tefeu")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Platform2" unique_id=390501585]
 shape = SubResource("RectangleShape2D_fmmi7")
@@ -138,7 +230,7 @@ position = Vector2(759, 231)
 
 [node name="ExitDoor" type="Area2D" parent="." unique_id=25867777]
 collision_mask = 2
-script = ExtResource("8_tipki")
+script = SubResource("GDScript_o6xl0")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ExitDoor" unique_id=1086608428]
 position = Vector2(987, 570)

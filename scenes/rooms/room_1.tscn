@@ -1,7 +1,9 @@
 [gd_scene format=4 uid="uid://c6m1l2c60kunc"]
 
+[ext_resource type="Script" uid="uid://b3gykiv7vqdx" path="res://scenes/rooms/room_1.gd" id="1_fbq1s"]
 [ext_resource type="PackedScene" uid="uid://ddqbiq2orptsa" path="res://scenes/player.tscn" id="1_hnbyo"]
 [ext_resource type="Texture2D" uid="uid://wd88th88y6x5" path="res://assets/tilesets/level_tileset.png" id="1_scgta"]
+[ext_resource type="PackedScene" uid="uid://dk7ufw0jxxguo" path="res://scenes/rooms/room_2.tscn" id="2_wodat"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_hnbyo"]
 texture = ExtResource("1_scgta")
@@ -698,6 +700,8 @@ texture = ExtResource("1_scgta")
 sources/0 = SubResource("TileSetAtlasSource_scgta")
 
 [node name="Room1" type="Node2D" unique_id=387413928]
+script = ExtResource("1_fbq1s")
+next_room = ExtResource("2_wodat")
 
 [node name="Player" parent="." unique_id=1493234333 instance=ExtResource("1_hnbyo")]
 position = Vector2(37, -16)

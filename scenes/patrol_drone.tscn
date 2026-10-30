@@ -156,6 +156,7 @@ sprite_frames = SubResource("SpriteFrames_m3mo6")
 animation = &"drone_run"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1369938856]
+position = Vector2(4, 0)
 scale = Vector2(2, 2)
 shape = SubResource("RectangleShape2D_m3mo6")
 
